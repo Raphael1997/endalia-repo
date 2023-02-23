@@ -2,6 +2,7 @@ import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { MainComponent } from './main.component';
 import { RouterModule, Routes } from '@angular/router';
+import { AuthGuard } from 'src/app/shared/guards/auth.guard';
 
 
 const routes: Routes = [
@@ -9,7 +10,7 @@ const routes: Routes = [
   {
     path: 'employees',
     loadChildren: () => import('./employee/employee.module').then(m => m.EmployeeModule),
-    canLoad: [], canDeactivate: []
+    canLoad: [AuthGuard]
   }
 ];
 

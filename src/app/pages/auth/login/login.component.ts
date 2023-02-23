@@ -58,6 +58,7 @@ export class LoginComponent implements OnInit {
       setTimeout(() => {
         document.body.style.backgroundImage = '';
         this.router.navigate(['/employees/employees-list']);
+        localStorage.setItem('userLog', 'Usuario logueado');
         this.isLoadingData = false;
       }, 1500);
     } else {
