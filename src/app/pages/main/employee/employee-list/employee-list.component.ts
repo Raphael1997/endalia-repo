@@ -1,6 +1,7 @@
-import { Component, OnInit } from '@angular/core';
-import { IEmployes } from 'src/app/shared/interfaces/IEmployess';
-import { Employees } from 'src/app/shared/models/Employee';
+import { Component, EventEmitter, OnInit } from '@angular/core';
+import { debounce, debounceTime, EMPTY, timer } from 'rxjs';
+import { IEmployees } from 'src/app/shared/interfaces/IEmployess';
+import { EmployeeService } from 'src/app/shared/services/employee-service';
 
 @Component({
   selector: 'app-employee-list',
@@ -9,12 +10,33 @@ import { Employees } from 'src/app/shared/models/Employee';
 })
 export class EmployeeListComponent implements OnInit {
 
-  constructor() { }
+  _searchKeyUp$ = new EventEmitter<KeyboardEvent>();
+  constructor(
+    private readonly employeeSV: EmployeeService
+  ) { }
 
-  service: IEmployes[] = [];
+  employeeList: IEmployees[] = [];
+  search = '';
   ngOnInit(): void {
 
-    this.service = Employees;
+    this.getEmployee();
+
+    this.searchEmployees();
   }
 
+  getEmployee() {
+    this.employeeSV.getEmployees().subscribe((data: IEmployees[]) => {
+      this.employeeList = data;
+    });
+  }
+
+  searchEmployees() {
+    this._searchKeyUp$
+      .pipe(debounce((ev) => ev.key !== 'Enter' ? timer(200) : EMPTY))
+      .subscribe((ev) => {
+        this.employeeSV.searchEmployees(this.search).subscribe((data) => {
+          this.employeeList = data;
+        })
+      })
+  }
 }
