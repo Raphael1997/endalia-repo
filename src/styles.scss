@@ -1,1 +1,7 @@
 /* You can add global styles to this file, and also import other style files */
+$endalida-color: #1252a1;
+
+.form-control:focus {
+    color: $endalida-color;
+    box-shadow: none;
+}
