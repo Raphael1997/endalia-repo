@@ -11,7 +11,10 @@ const routes: Routes = [
     path: 'employees',
     loadChildren: () => import('./employee/employee.module').then(m => m.EmployeeModule),
     canLoad: [AuthGuard]
-  }
+  },
+
+  /* Page not found */
+  { path: '**', redirectTo: 'employees' }
 ];
 
 @NgModule({

@@ -20,9 +20,8 @@ export class LoginComponent implements OnInit {
   formSubmitted = false;
 
   ngOnInit(): void {
+    localStorage.clear();
     document.body.style.backgroundImage = "url('assets/img/endalia-background.png')";
-
-
     this.initLoginForm();
   }
 

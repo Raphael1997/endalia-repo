@@ -17,8 +17,8 @@ const routes: Routes = [
     loadChildren: () => import('../pages/main/main.module').then(m => m.MainModule)
   },
 
-  /* No page found */
-  /*  { path: '**', redirectTo: '' } */
+  /* No page found  */
+  { path: '**', redirectTo: 'auth' }
 ];
 
 @NgModule({
