@@ -22,14 +22,17 @@ export class LoginComponent implements OnInit {
   ngOnInit(): void {
     localStorage.clear();
     document.body.style.backgroundImage = "url('assets/img/endalia-background.png')";
+    document.body.style.backgroundSize = 'cover';
+    document.body.style.backgroundRepeat = 'no-repeat';
+
     this.initLoginForm();
   }
 
 
   initLoginForm() {
     this.loginForm = new FormGroup<ILoginForm>({
-      username: new FormControl('', { nonNullable: true, validators: [Validators.required, Validators.email] }),
-      password: new FormControl('', { nonNullable: true, validators: [Validators.required] }),
+      username: new FormControl('', { nonNullable: true, validators: [Validators.required, Validators.pattern('^[a-z0-9._%+-]+@[a-z0-9.-]+\\.[a-z]{2,4}$')] }),
+      password: new FormControl('', { nonNullable: true, validators: [Validators.required, Validators.minLength(3)] }),
     });
   }
 
