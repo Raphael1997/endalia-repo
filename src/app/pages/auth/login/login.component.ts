@@ -31,7 +31,7 @@ export class LoginComponent implements OnInit {
 
   initLoginForm() {
     this.loginForm = new FormGroup<ILoginForm>({
-      username: new FormControl('', { nonNullable: true, validators: [Validators.required, Validators.pattern('^[a-z0-9._%+-]+@[a-z0-9.-]+\\.[a-z]{2,4}$')] }),
+      username: new FormControl('angular@endalia.com', { nonNullable: true, validators: [Validators.required, Validators.pattern('^[a-z0-9._%+-]+@[a-z0-9.-]+\\.[a-z]{2,4}$')] }),
       password: new FormControl('', { nonNullable: true, validators: [Validators.required, Validators.minLength(3)] }),
     });
   }
