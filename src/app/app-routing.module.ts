@@ -13,7 +13,10 @@ const routes: Routes = [
   {
     path: '', component: MainComponent,
     loadChildren: () => import('./pages/main/main.module').then(m => m.MainModule)
-  }
+  },
+
+  /* No page found */
+  /*  { path: '**', redirectTo: '' } */
 ];
 
 @NgModule({
