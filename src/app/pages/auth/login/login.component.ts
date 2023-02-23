@@ -51,8 +51,8 @@ export class LoginComponent implements OnInit {
     return this.loginForm.get(field)?.touched;
   }
 
-  onSubmitLoginForm(form: SubmitEvent) {
-    form.preventDefault();
+  onSubmitLoginForm(ev: SubmitEvent) {
+    ev.preventDefault();
     this.textButtonLogin = 'Loading...';
     this.formSubmitted = true;
     if (this.loginForm.valid) {
