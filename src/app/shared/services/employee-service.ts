@@ -11,7 +11,6 @@ export class EmployeeService {
 
 
   /* Mock Employees */
-
   private dataEmployess: IEmployees[] = [
     {
       fullName: 'Ariza Hidalo, Ignacio',
@@ -94,8 +93,13 @@ export class EmployeeService {
   }
 
 
+  /**
+   * It filters the dataEmployess array by the searchTerm and returns the filtered array as an
+   * Observable.
+   * @param {string} searchTerm - string - The search term that the user has entered.
+   * @returns An Observable of an array of IEmployees.
+   */
   searchEmployees(searchTerm: string): Observable<IEmployees[]> {
-
     let filteredEmployees = this.dataEmployess.filter(employee =>
       employee.fullName.toLowerCase().includes(searchTerm.toLowerCase()) ||
       employee.job.toLowerCase().includes(searchTerm.toLowerCase()) ||
@@ -108,6 +112,10 @@ export class EmployeeService {
     return of(filteredEmployees);
   }
 
+  /**
+   * Sort the dataEmployess array by the fullName property of each object in the array.
+   * @returns the sorted array.
+   */
   private orderListEmployessByFullName(): void {
     this.dataEmployess.sort(function (a, b) {
       if (a.fullName < b.fullName)

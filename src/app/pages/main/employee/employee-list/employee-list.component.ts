@@ -1,5 +1,5 @@
-import { Component, EventEmitter, OnInit } from '@angular/core';
-import { debounce, debounceTime, EMPTY, timer } from 'rxjs';
+import { Component, EventEmitter, OnDestroy, OnInit } from '@angular/core';
+import { debounce, debounceTime, EMPTY, Subscription, timer } from 'rxjs';
 import { IEmployees } from 'src/app/shared/interfaces/IEmployess';
 import { EmployeeService } from 'src/app/shared/services/employee-service';
 
@@ -8,15 +8,19 @@ import { EmployeeService } from 'src/app/shared/services/employee-service';
   templateUrl: './employee-list.component.html',
   styleUrls: ['./employee-list.component.scss']
 })
-export class EmployeeListComponent implements OnInit {
+export class EmployeeListComponent implements OnInit, OnDestroy {
 
   _searchKeyUp$ = new EventEmitter<KeyboardEvent>();
+  employeeList: IEmployees[] = [];
+  search = '';
+  // subscription
+  subs: Subscription[] = [];
+
   constructor(
     private readonly employeeSV: EmployeeService
   ) { }
 
-  employeeList: IEmployees[] = [];
-  search = '';
+
   ngOnInit(): void {
 
     this.getEmployee();
@@ -24,19 +28,32 @@ export class EmployeeListComponent implements OnInit {
     this.searchEmployees();
   }
 
-  getEmployee() {
-    this.employeeSV.getEmployees().subscribe((data: IEmployees[]) => {
-      this.employeeList = data;
-    });
+  ngOnDestroy(): void {
+    this.subs.forEach(e => e.unsubscribe());
   }
 
-  searchEmployees() {
-    this._searchKeyUp$
+  /**
+   * The getEmployee() function is a function that calls the getEmployees() function from the employeeSV
+   * service, which returns an observable of type IEmployees[], which is then assigned to the
+   * employeeList variable.
+   */
+  getEmployee(): void {
+    const sGetEmployessSubscription = this.employeeSV.getEmployees().subscribe((data: IEmployees[]) => {
+      this.employeeList = data;
+    });
+
+    this.subs.push(sGetEmployessSubscription);
+  }
+
+  searchEmployees(): void {
+    const sSearchSubscription = this._searchKeyUp$
       .pipe(debounce((ev) => ev.key !== 'Enter' ? timer(200) : EMPTY))
       .subscribe((ev) => {
         this.employeeSV.searchEmployees(this.search).subscribe((data) => {
           this.employeeList = data;
         })
-      })
+      });
+
+    this.subs.push(sSearchSubscription);
   }
 }

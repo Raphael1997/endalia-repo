@@ -12,11 +12,11 @@ export class MainComponent implements OnInit {
     private readonly router: Router
   ) { }
 
-  ngOnInit(): void {
-  }
+  ngOnInit(): void { }
 
-
-
+  /**
+   * It clears the local storage and navigates to the login page.
+   */
   logout() {
     localStorage.clear();
     this.router.navigate(['auth/login']);
