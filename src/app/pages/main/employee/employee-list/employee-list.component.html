@@ -1,16 +1,16 @@
-<div class="row">
-    <div class="col-md-6">
-        <h1 class="mb-3">Directorio de empleados</h1>
+<div class="row p-3">
+    <div class="col-md-6 ">
+        <h2 class="mb-3">Directorio de empleados</h2>
         <input class="form-control" type="text" [(ngModel)]="search" (keyup)="_searchKeyUp$.next($event)"
             placeholder="Buscar...">
     </div>
 </div>
-<div class="row row-cols-md-2 ">
+<div class="row row-cols-md-2 p-3">
     <div class="col-md-6" *ngFor="let employee of employeeList || []">
         <div class="card card-height  mt-3">
             <div class="row g-0 p-3">
-                <div class="col-2">
-                    <img class="img-fluid h-100" [src]="employee.image" [alt]="employee.fullName">
+                <div class="col-2 d-flex justify-content-center m-auto">
+                    <img class="img-fluid" [src]="employee.image" [alt]="employee.fullName">
                 </div>
                 <div class="col-10">
                     <div class="card-body">

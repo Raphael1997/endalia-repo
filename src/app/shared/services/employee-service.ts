@@ -7,7 +7,10 @@ import { IEmployees } from '../interfaces/IEmployess';
 })
 export class EmployeeService {
 
-  constructor() { }
+  constructor() {
+    console.log('Service init');
+    this.sortListEmployessByFullName();
+  }
 
 
   /* Mock Employees */
@@ -88,7 +91,6 @@ export class EmployeeService {
    * @returns An Observable of an array of IEmployees
    */
   getEmployees(): Observable<IEmployees[]> {
-    this.sortListEmployessByFullName();
     return of(this.dataEmployess);
   }
 
@@ -100,15 +102,12 @@ export class EmployeeService {
    * @returns An Observable of an array of IEmployees.
    */
   searchEmployees(searchTerm: string): Observable<IEmployees[]> {
-    let filteredEmployees = this.dataEmployess.filter(employee =>
+    const filteredEmployees = this.dataEmployess.filter(employee =>
       employee.fullName.toLowerCase().includes(searchTerm.toLowerCase()) ||
       employee.job.toLowerCase().includes(searchTerm.toLowerCase()) ||
       employee.telephone.toLowerCase().includes(searchTerm.toLowerCase()) ||
       employee.email.toLowerCase().includes(searchTerm.toLowerCase())
     );
-
-    this.sortListEmployessByFullName();
-
     return of(filteredEmployees);
   }
 
