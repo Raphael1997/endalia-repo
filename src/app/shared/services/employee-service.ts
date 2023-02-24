@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { debounceTime, distinctUntilChanged, map, Observable, of } from 'rxjs';
+import { Observable, of } from 'rxjs';
 import { IEmployees } from '../interfaces/IEmployess';
 
 @Injectable({
@@ -88,7 +88,7 @@ export class EmployeeService {
    * @returns An Observable of an array of IEmployees
    */
   getEmployees(): Observable<IEmployees[]> {
-    this.orderListEmployessByFullName();
+    this.sortListEmployessByFullName();
     return of(this.dataEmployess);
   }
 
@@ -107,7 +107,7 @@ export class EmployeeService {
       employee.email.toLowerCase().includes(searchTerm.toLowerCase())
     );
 
-    this.orderListEmployessByFullName();
+    this.sortListEmployessByFullName();
 
     return of(filteredEmployees);
   }
@@ -116,7 +116,7 @@ export class EmployeeService {
    * Sort the dataEmployess array by the fullName property of each object in the array.
    * @returns the sorted array.
    */
-  private orderListEmployessByFullName(): void {
+  private sortListEmployessByFullName(): void {
     this.dataEmployess.sort(function (a, b) {
       if (a.fullName < b.fullName)
         return -1;
